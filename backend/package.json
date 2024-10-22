@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@oak/oak": "npm:@jsr/oak__oak@^17.1.0",
+    "date-fns": "^4.1.0",
+    "mongoose": "^8.7.2",
+    "openai": "^4.67.3"
+  }
+}
