@@ -1,4 +1,4 @@
-import isThenable from './isThenable.ts';
+import isThenable from "./isThenable.ts";
 
 type Func<T> = (...args: unknown[]) => T | Promise<T>;
 
@@ -14,7 +14,7 @@ function execute<T>(cb: () => T): T | Error {
 
 export default function tryCatch<T, D = (T | null)>(
   cb: Func<T>,
-  defaultValue: D = null as D
+  defaultValue: D = null as D,
 ): TryCatchResult<T, D> {
   const result = execute(cb);
 
@@ -25,7 +25,7 @@ export default function tryCatch<T, D = (T | null)>(
   if (isThenable(result)) {
     return result.then(
       (resolvedValue: T): [T, null] => [resolvedValue, null],
-      (error: Error): [D, Error] => [defaultValue, error]
+      (error: Error): [D, Error] => [defaultValue, error],
     );
   }
 

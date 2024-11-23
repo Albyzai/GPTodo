@@ -1,5 +1,5 @@
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 export default function CreateApp() {
-    return new Hono()
+  return new Hono();
 }

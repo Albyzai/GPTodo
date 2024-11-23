@@ -1,18 +1,16 @@
-//import adapter from '@sveltejs/adapter-auto';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import adapter from 'svelte-adapter-deno'
-/** @type {import('@sveltejs/kit').Config} */
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import adapter from "svelte-adapter-deno";
+import path from "node:path";
 const config = {
-	preprocess: [vitePreprocess({})],
-	kit: {
-		adapter: adapter(),
-		alias: {
-			$lib: 'src/lib',
-			$utils: 'src/lib/utils',
-			$shadcn: 'src/lib/components/ui',
-			$components: 'src/components'
-		}
-	}
+  preprocess: [vitePreprocess({})],
+  kit: {
+    adapter: adapter(),
+    alias: {
+      $lib: path.resolve('./src/lib'),
+      $app: path.resolve('./node_modules/@sveltejs/kit/src/runtime/app')
+      
+    },
+  },
 };
 
 export default config;

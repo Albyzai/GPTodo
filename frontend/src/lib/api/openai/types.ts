@@ -1,18 +1,18 @@
 export type ChatCompletionRequestMessage = {
-    role: 'system' | 'user' | 'assistant';
-    content: string;
+  role: "system" | "user" | "assistant";
+  content: string;
 };
 
 export type Message = {
-    message: {
-        content: string
-    }
+  message: {
+    content: string;
+  };
 };
 
 export type ChatGPTResponse = {
-    choices: Array<Message>;
+  choices: Array<Message>;
 };
 
 export type TranscriptionResponse = {
-    text: string;
+  text: string;
 };

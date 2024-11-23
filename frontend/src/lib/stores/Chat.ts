@@ -1,5 +1,5 @@
 import { writable, get } from "svelte/store";
-import { todoStore, type Task } from "./Todo";
+import { todoStore } from "./Todo.ts";
 
 export type Message = {
     role: 'user' | 'assistant';
@@ -16,7 +16,7 @@ function createChatStore() {
     async function handleNewUserMessage() {
         update(store => ({ ...store, isProcessing: true }));
         try {
-            const store = get(chatStore)
+         const store = get(chatStore)
             const response = await fetch("/api/openai/completion", {
                 method: "POST",
                 headers: {
@@ -27,8 +27,16 @@ function createChatStore() {
                     language: store.language
                 }),
             });
-            const { text, tasks } = await response.json();
-
+            console.log('API Response Status:', response.status);
+            const responseData = await response.json();
+            console.log('API Response Data:', responseData);
+    
+            if (!response.ok) {
+                throw new Error(`API responded with status ${response.status}`);
+            }
+    
+            const { text, tasks = [] } = responseData;
+    
             update(store => ({
                 ...store,
                 messages: [...store.messages, { role: 'assistant', content: text }]

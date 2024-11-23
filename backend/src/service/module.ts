@@ -1,7 +1,7 @@
-import Module from '$core/Module.ts'
-import Router from './Router.ts'
-import database from '$database/module.ts'
+import Module from "$core/Module.ts";
+import Router from "./Router.ts";
+import database from "$database/module.ts";
 
 export default new Module()
-    .extends(database)
-    .register(Router, true)
+  .extends(database)
+  .register(Router, true);

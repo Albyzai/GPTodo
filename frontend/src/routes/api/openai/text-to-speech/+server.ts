@@ -1,14 +1,14 @@
-import { textToSpeech } from '../../../../lib/api/openai/api';
-import type { RequestHandler } from './$types';
+import textToSpeech from "../../../../api/openai/text-to-speech.ts";
+import type { RequestEvent } from "@sveltejs/kit";
 
-export const POST: RequestHandler = async ({ request }) => {
-  const { text } = await request.json();
-  const stream = await textToSpeech(text);
+export const POST = async ({ request }: RequestEvent) => {
+  const data = await request.json();
+  console.log("DATA", data);
+  const audioStream = await textToSpeech(data.content);
 
-  return new Response(stream, {
+  return new Response(audioStream, {
     headers: {
-      'Content-Type': 'audio/mpeg',
-      'Transfer-Encoding': 'chunked',
+      "Content-Type": "audio/mpeg",
     },
   });
 };

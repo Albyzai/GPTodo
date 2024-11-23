@@ -27,11 +27,14 @@ Deno.test("Module IoC", async (t) => {
   await t.step("should resolve dependencies", () => {
     const dep1 = () => "Dependency 1";
     const dep2 = () => "Dependency 2";
-    const main = Object.assign((dep1: string, dep2: string) => `${dep1} and ${dep2}`, {
-      $inject: [dep1, dep2],
-    });
+    const main = Object.assign(
+      (dep1: string, dep2: string) => `${dep1} and ${dep2}`,
+      {
+        $inject: [dep1, dep2],
+      },
+    );
     let result: string | undefined;
-  
+
     new Module()
       .register(dep1)
       .register(dep2)
@@ -43,7 +46,7 @@ Deno.test("Module IoC", async (t) => {
         },
       ])
       .initiate();
-  
+
     assertEquals(result, "Dependency 1 and Dependency 2");
   });
 
@@ -111,14 +114,14 @@ Deno.test("Module IoC", async (t) => {
       .schedule([
         increment,
         (cb) => {
-          const val = cb()
+          const val = cb();
           instance1 = val;
         },
       ])
       .schedule([
         increment,
         (cb) => {
-          const val = cb()
+          const val = cb();
           instance2 = val;
         },
       ])
@@ -147,10 +150,15 @@ Deno.test("Module IoC", async (t) => {
       .register(extendedValue)
       .register(extendedSharedValue, true) // Add a new shared value
       .before(extendedSharedValue, () => console.log("Extended Before"))
-      .after(extendedSharedValue, (value) => console.log(`Extended After: ${value}`))
+      .after(
+        extendedSharedValue,
+        (value) => console.log(`Extended After: ${value}`),
+      )
       .schedule(() => console.log("Extended Scheduled Task"));
 
-    const combinedModule = new Module().extends(baseModule).extends(extendingModule);
+    const combinedModule = new Module().extends(baseModule).extends(
+      extendingModule,
+    );
 
     const logs: string[] = [];
     const originalConsoleLog = console.log;

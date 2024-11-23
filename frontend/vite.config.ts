@@ -1,7 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import { loadEnv } from 'vite';
-import path from 'path';
+import path from 'node:path';
+import process from 'node:process';
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
@@ -10,14 +11,8 @@ export default defineConfig(({ mode }) => {
 	  resolve: {
 		alias: {
 		  $lib: path.resolve('./src/lib'),
-		  $components: path.resolve('./src/lib'),
-		  $utils: path.resolve('./src/lib/utils.ts'),
-		  $shadcn: path.resolve('./src/lib/components/ui')
+		  $app: path.resolve('./node_modules/@sveltejs/kit/src/runtime/app')
 		},
-		extensions: ['.js', '.ts', '.svelte']
 	  },
-	  define: {
-		'process.env': env
-	  }
 	};
   });

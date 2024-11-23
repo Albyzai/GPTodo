@@ -4,4 +4,4 @@ import schemas from "./schemas/module.ts";
 
 export default new Module()
   .extends(schemas)
-  .register(Default);
+  .register(Default, true);

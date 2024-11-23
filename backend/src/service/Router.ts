@@ -1,11 +1,10 @@
-import { Hono } from 'hono';
-import type { Context } from 'hono';
+import { Hono } from "hono";
+import type { Context } from "hono";
 
 const startTime = Date.now();
 export type Router = Hono;
 
 export default function CreateRouter(): Router {
-  
   const router = new Hono();
 
   router.get("/health", (c: Context) => {
@@ -30,10 +29,9 @@ export default function CreateRouter(): Router {
       },
       responseTime: `${Date.now() - currentTime}ms`,
     };
-  
+
     return c.json(healthCheck, 200);
   });
 
   return router;
-
 }

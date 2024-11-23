@@ -123,7 +123,10 @@ export default class Module {
     return this;
   }
 
-  after<T>(factory: Factory<T>, hook: (instance: T, resolve: <R>(factory: Factory<R>) => R) => void): this {
+  after<T>(
+    factory: Factory<T>,
+    hook: (instance: T, resolve: <R>(factory: Factory<R>) => R) => void,
+  ): this {
     const hooks = this.#lifecycleHooks.get("after");
     if (!hooks.has(factory)) hooks.set(factory, new Set());
     hooks.get(factory).add(hook as LifecycleHook<unknown>);
@@ -177,7 +180,9 @@ export default class Module {
   #resolve<T>(factory: Factory<T>): T {
     const entry = this.#registry.get(factory);
     if (!entry) {
-      throw new Error(`No factory registered for: ${factory.name || 'anonymous'}`);
+      throw new Error(
+        `No factory registered for: ${factory.name || "anonymous"}`,
+      );
     }
     const { isSingleton } = entry;
 
@@ -203,8 +208,8 @@ export default class Module {
     for (const hook of beforeHooks) {
       hook();
     }
-    console.log('FACTORY', factory.name)
-    const dependencies = getInject(factory).map(dep => this.#resolve(dep));
+
+    const dependencies = getInject(factory).map((dep) => this.#resolve(dep));
     const instance = factory(...dependencies);
 
     for (const hook of afterHooks) {
